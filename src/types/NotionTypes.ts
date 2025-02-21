@@ -1,10 +1,10 @@
-import { Client } from "@notionhq/client";
+import { Client } from '@notionhq/client';
 import {
   DatabaseObjectResponse,
   PageObjectResponse,
   PartialDatabaseObjectResponse,
   PartialPageObjectResponse,
-} from "@notionhq/client/build/src/api-endpoints";
+} from '@notionhq/client/build/src/api-endpoints';
 
 export type Title = string;
 export type Relation = string;

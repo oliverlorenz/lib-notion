@@ -1,1 +1,1 @@
-export * from "./NotionTypes";
+export * from './NotionTypes';

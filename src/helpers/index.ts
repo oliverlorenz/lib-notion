@@ -1,1 +1,1 @@
-export * from "./NotionHelper";
+export * from './NotionHelper';

@@ -31,7 +31,7 @@ jobs:
         uses: home-assistant/actions/helpers/jq@master
 
       - name: Set NodeJS version
-        uses: actions/setup-node@v4.2.2
+        uses: actions/setup-node@v4.2.0
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'

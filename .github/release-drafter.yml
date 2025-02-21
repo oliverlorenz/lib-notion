@@ -1,0 +1,55 @@
+name-template: '$RESOLVED_VERSION'
+tag-template: '$RESOLVED_VERSION'
+version-resolver:
+  minor:
+    labels:
+      - 'feat'
+  default: patch
+
+categories:
+  - title: ':wrench: Build'
+    labels:
+      - 'build'
+
+  - title: ':boar: Chore'
+    labels:
+      - 'chore'
+
+  - title: ':green_heart: CI'
+    labels:
+      - 'ci'
+
+  - title: ':books: Documentation'
+    labels:
+      - 'docs'
+
+  - title: ':star: Features'
+    labels:
+      - 'feat'
+
+  - title: ':beetle: Bug Fixes'
+    labels:
+      - 'fix'
+
+  - title: ':zap: Performance'
+    labels:
+      - 'perf'
+
+  - title: ':recycle: Refactor'
+    labels:
+      - 'refactor'
+
+  - title: ':white_check_mark: Test'
+    labels:
+      - 'test'
+
+  - title: ':arrow_up: Dependencies'
+    collapse-after: 1
+    labels:
+      - 'dependencies'
+
+change-template: '- #$NUMBER $TITLE @$AUTHOR'
+sort-direction: ascending
+
+template: |
+  $CHANGES

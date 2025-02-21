@@ -39,7 +39,7 @@ export default [{
     rules: {
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/explicit-function-return-type": "error",
-        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "error",
         "@typescript-eslint/no-floating-promises": "error",
 

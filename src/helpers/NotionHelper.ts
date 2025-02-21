@@ -1,4 +1,4 @@
-import { NotionRawEntity, SimplifiedNotionEntity } from "../types";
+import { NotionRawEntity, Relation, SimplifiedNotionEntity } from "../types";
 
 export function readProperty<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
@@ -34,7 +34,7 @@ export function readTitle<NotionType extends SimplifiedNotionEntity>(
 export function readTitleOrFail<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
   propertyName: keyof NotionType
-) {
+): string {
   return orFail<NotionType, string>(
     propertyName,
     readTitle<NotionType>(entry, propertyName)
@@ -56,7 +56,7 @@ export function readRichText<NotionType extends SimplifiedNotionEntity>(
 export function readRichTextOrFail<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
   propertyName: keyof NotionType
-) {
+): string {
   return orFail<NotionType, string>(
     propertyName,
     readRichText(entry, propertyName)
@@ -77,7 +77,7 @@ export function readNumber<NotionType extends SimplifiedNotionEntity>(
 export function readNumberOrFail<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
   propertyName: keyof NotionType
-) {
+): number {
   return orFail<NotionType, number>(
     propertyName,
     readNumber(entry, propertyName)
@@ -98,7 +98,7 @@ export function readBoolean<NotionType extends SimplifiedNotionEntity>(
 export function readBooleanOrFail<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
   propertyName: keyof NotionType
-) {
+): boolean {
   return orFail<NotionType, boolean>(
     propertyName,
     readBoolean(entry, propertyName)
@@ -117,8 +117,8 @@ export function readDateTimeStart<NotionType extends SimplifiedNotionEntity>(
 }
 
 export function readDateTimeStartOrFail<
-  NotionType extends SimplifiedNotionEntity
->(entry: NotionRawEntity, propertyName: keyof NotionType) {
+  NotionType extends SimplifiedNotionEntity,
+>(entry: NotionRawEntity, propertyName: keyof NotionType): Date {
   return orFail<NotionType, Date>(
     propertyName,
     readDateTimeStart(entry, propertyName)
@@ -132,13 +132,13 @@ export function readDateTimeStartOrFail<
 export function readSingleRelation<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
   propertyName: keyof NotionType
-): string | undefined {
+): Relation | undefined {
   return readProperty<NotionType>(entry, propertyName)?.relation[0]?.id;
 }
 
 export function readSingleRelationOrFail<
-  NotionType extends SimplifiedNotionEntity
->(entry: NotionRawEntity, propertyName: keyof NotionType) {
+  NotionType extends SimplifiedNotionEntity,
+>(entry: NotionRawEntity, propertyName: keyof NotionType): Relation {
   return orFail(propertyName, readSingleRelation(entry, propertyName));
 }
 
@@ -148,7 +148,7 @@ export function readSingleRelationOrFail<
 
 export function readRelationIdList<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
-  propertyName: keyof NotionType,
+  propertyName: keyof NotionType
 ): string[] | undefined {
   return (
     readProperty<NotionType>(entry, propertyName)?.relation as { id: string }[]
@@ -159,6 +159,6 @@ export function readRelationIdList<NotionType extends SimplifiedNotionEntity>(
 
 export function readRelationIdListOrFail<
   NotionType extends SimplifiedNotionEntity,
->(entry: NotionRawEntity, propertyName: keyof NotionType) {
+>(entry: NotionRawEntity, propertyName: keyof NotionType): string[] {
   return orFail(propertyName, readRelationIdList(entry, propertyName));
 }

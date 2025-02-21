@@ -16,6 +16,12 @@
     "skipLibCheck": true,
     "pretty": true,
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "plugins": [
+      {
+        "name": "typescript-strict-plugin",
+        "paths": ["src"]
+      }
+    ]
   }
 }

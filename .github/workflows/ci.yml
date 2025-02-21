@@ -36,6 +36,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run ${{ matrix.linter }}
+        run: yarn lint:${{ matrix.linter }}
   test:
     name: Test
     needs: lint

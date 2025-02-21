@@ -150,9 +150,11 @@ export function readRelationIdList<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
   propertyName: keyof NotionType,
 ): string[] | undefined {
-  return (
-    readProperty<NotionType>(entry, propertyName)?.relation as { id: string }[]
-  ).map((relation) => {
+  const property = readProperty<NotionType>(entry, propertyName);
+  if (property === undefined) {
+    return undefined;
+  }
+  return (property.relation as { id: string }[]).map((relation) => {
     return relation.id;
   });
 }

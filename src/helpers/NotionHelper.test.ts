@@ -4,6 +4,7 @@ import {
   readDateTimeStartOrFail,
   readNumberOrFail,
   readProperty,
+  readRelationIdListOrFail,
   readSingleRelation,
   readSingleRelationOrFail,
   readTitle,
@@ -14,6 +15,7 @@ import { readRichText } from "./NotionHelper";
 import { readRichTextOrFail } from "./NotionHelper";
 import { readNumber } from "./NotionHelper";
 import { readDateTimeStart } from "./NotionHelper";
+import { readRelationIdList } from "./NotionHelper";
 
 describe("NotionHelper", () => {
   describe("readProperty", () => {
@@ -44,7 +46,7 @@ describe("NotionHelper", () => {
     it("should return undefined for a non-existent property", () => {
       const result = readProperty<TestEntity>(
         mockEntry,
-        "nonExistent" as keyof TestEntity,
+        "nonExistent" as keyof TestEntity
       );
       expect(result).toBeUndefined();
     });
@@ -70,7 +72,7 @@ describe("NotionHelper", () => {
     it("should return undefined if title property does not exist", () => {
       const result = readTitle<TestEntity>(
         { properties: {} } as NotionRawEntity,
-        "title",
+        "title"
       );
       expect(result).toBeUndefined();
     });
@@ -83,7 +85,7 @@ describe("NotionHelper", () => {
             title: { title: [] },
           },
         } satisfies NotionRawEntity,
-        "title",
+        "title"
       );
       expect(result).toBeUndefined();
     });
@@ -110,7 +112,7 @@ describe("NotionHelper", () => {
       expect(() => {
         readTitleOrFail<TestEntity>(
           { properties: {} } as NotionRawEntity,
-          "title",
+          "title"
         );
       }).toThrow('Property "title was undefined. abort.');
     });
@@ -124,7 +126,7 @@ describe("NotionHelper", () => {
               title: { title: [] },
             },
           } satisfies NotionRawEntity,
-          "title",
+          "title"
         );
       }).toThrow('Property "title was undefined. abort.');
     });
@@ -150,7 +152,7 @@ describe("NotionHelper", () => {
     it("should return undefined if rich text property does not exist", () => {
       const result = readRichText<TestEntity>(
         { properties: {} } as NotionRawEntity,
-        "richText",
+        "richText"
       );
       expect(result).toBeUndefined();
     });
@@ -163,7 +165,7 @@ describe("NotionHelper", () => {
             richText: { rich_text: [] },
           },
         } satisfies NotionRawEntity,
-        "richText",
+        "richText"
       );
       expect(result).toBeUndefined();
     });
@@ -190,7 +192,7 @@ describe("NotionHelper", () => {
       expect(() => {
         readRichTextOrFail<TestEntity>(
           { properties: {} } as NotionRawEntity,
-          "richText",
+          "richText"
         );
       }).toThrow('Property "richText was undefined. abort.');
     });
@@ -204,7 +206,7 @@ describe("NotionHelper", () => {
               richText: { rich_text: [] },
             },
           } satisfies NotionRawEntity,
-          "richText",
+          "richText"
         );
       }).toThrow('Property "richText was undefined. abort.');
     });
@@ -230,7 +232,7 @@ describe("NotionHelper", () => {
     it("should return undefined if number property does not exist", () => {
       const result = readNumber<TestEntity>(
         { properties: {} } as NotionRawEntity,
-        "number",
+        "number"
       );
       expect(result).toBeUndefined();
     });
@@ -243,7 +245,7 @@ describe("NotionHelper", () => {
             number: {},
           },
         } satisfies NotionRawEntity,
-        "number",
+        "number"
       );
       expect(result).toBeUndefined();
     });
@@ -270,7 +272,7 @@ describe("NotionHelper", () => {
       expect(() => {
         readNumberOrFail<TestEntity>(
           { properties: {} } as NotionRawEntity,
-          "number",
+          "number"
         );
       }).toThrow('Property "number was undefined. abort.');
     });
@@ -284,7 +286,7 @@ describe("NotionHelper", () => {
               number: {},
             },
           } satisfies NotionRawEntity,
-          "number",
+          "number"
         );
       }).toThrow('Property "number was undefined. abort.');
     });
@@ -309,7 +311,7 @@ describe("NotionHelper", () => {
     it("should return undefined if boolean property does not exist", () => {
       const result = readBoolean<TestEntity>(
         { properties: {} } as NotionRawEntity,
-        "boolean",
+        "boolean"
       );
       expect(result).toBeUndefined();
     });
@@ -322,7 +324,7 @@ describe("NotionHelper", () => {
             boolean: {},
           },
         } satisfies NotionRawEntity,
-        "boolean",
+        "boolean"
       );
       expect(result).toBeUndefined();
     });
@@ -348,7 +350,7 @@ describe("NotionHelper", () => {
       expect(() => {
         readBooleanOrFail<TestEntity>(
           { properties: {} } as NotionRawEntity,
-          "boolean",
+          "boolean"
         );
       }).toThrow('Property "boolean was undefined. abort.');
     });
@@ -362,7 +364,7 @@ describe("NotionHelper", () => {
               boolean: {},
             },
           } satisfies NotionRawEntity,
-          "boolean",
+          "boolean"
         );
       }).toThrow('Property "boolean was undefined. abort.');
     });
@@ -387,7 +389,7 @@ describe("NotionHelper", () => {
     it("should return undefined if date time start property does not exist", () => {
       const result = readDateTimeStart<TestEntity>(
         { properties: {} } as NotionRawEntity,
-        "dateTimeStart",
+        "dateTimeStart"
       );
       expect(result).toBeUndefined();
     });
@@ -400,7 +402,7 @@ describe("NotionHelper", () => {
             dateTimeStart: { date: {} },
           },
         } satisfies NotionRawEntity,
-        "dateTimeStart",
+        "dateTimeStart"
       );
       expect(result).toBeUndefined();
     });
@@ -420,7 +422,7 @@ describe("NotionHelper", () => {
     it("should return the date time start property if it exists", () => {
       const result = readDateTimeStartOrFail<TestEntity>(
         mockEntry,
-        "dateTimeStart",
+        "dateTimeStart"
       );
       expect(result).toEqual(new Date("2023-01-01T00:00:00Z"));
     });
@@ -429,7 +431,7 @@ describe("NotionHelper", () => {
       expect(() => {
         readDateTimeStartOrFail<TestEntity>(
           { properties: {} } as NotionRawEntity,
-          "dateTimeStart",
+          "dateTimeStart"
         );
       }).toThrow('Property "dateTimeStart was undefined. abort.');
     });
@@ -443,7 +445,7 @@ describe("NotionHelper", () => {
               dateTimeStart: { date: {} },
             },
           } satisfies NotionRawEntity,
-          "dateTimeStart",
+          "dateTimeStart"
         );
       }).toThrow('Property "dateTimeStart was undefined. abort.');
     });
@@ -463,7 +465,7 @@ describe("NotionHelper", () => {
     it("should read the single relation property", () => {
       const result = readSingleRelation<TestEntity>(
         mockEntry,
-        "singleRelation",
+        "singleRelation"
       );
       expect(result).toBe("relation-id");
     });
@@ -471,7 +473,7 @@ describe("NotionHelper", () => {
     it("should return undefined if single relation property does not exist", () => {
       const result = readSingleRelation<TestEntity>(
         { properties: {} } as NotionRawEntity,
-        "singleRelation",
+        "singleRelation"
       );
       expect(result).toBeUndefined();
     });
@@ -484,7 +486,7 @@ describe("NotionHelper", () => {
             singleRelation: { relation: [] },
           },
         } satisfies NotionRawEntity,
-        "singleRelation",
+        "singleRelation"
       );
       expect(result).toBeUndefined();
     });
@@ -505,7 +507,7 @@ describe("NotionHelper", () => {
     it("should return the single relation property if it exists", () => {
       const result = readSingleRelationOrFail<TestEntity>(
         mockEntry,
-        "singleRelation",
+        "singleRelation"
       );
       expect(result).toBe("relation-id");
     });
@@ -514,7 +516,7 @@ describe("NotionHelper", () => {
       expect(() => {
         readSingleRelationOrFail<TestEntity>(
           { properties: {} } as NotionRawEntity,
-          "singleRelation",
+          "singleRelation"
         );
       }).toThrow('Property "singleRelation was undefined. abort.');
     });
@@ -528,9 +530,84 @@ describe("NotionHelper", () => {
               singleRelation: { relation: [] },
             },
           } satisfies NotionRawEntity,
-          "singleRelation",
+          "singleRelation"
         );
       }).toThrow('Property "singleRelation was undefined. abort.');
+    });
+  });
+
+  describe("readRelationIdList", () => {
+    interface TestEntity extends SimplifiedNotionEntity {
+      relationIdList: string[];
+    }
+
+    const mockEntry: NotionRawEntity = {
+      properties: {
+        relationIdList: {
+          // @ts-ignore
+          relation: [{ id: "relation-id-1" }, { id: "relation-id-2" }],
+        },
+      },
+    };
+
+    it("should read the relation id list property", () => {
+      const result = readRelationIdList<TestEntity>(
+        mockEntry,
+        "relationIdList"
+      );
+      expect(result).toEqual(["relation-id-1", "relation-id-2"]);
+    });
+
+    it("should return undefined if relation id list property does not exist", () => {
+      const result = readRelationIdList<TestEntity>(
+        { properties: {} } as NotionRawEntity,
+        "relationIdList"
+      );
+      expect(result).toBeUndefined();
+    });
+
+    it("should return empty array if relation id list value is not available", () => {
+      const result = readRelationIdList<TestEntity>(
+        {
+          properties: {
+            // @ts-ignore
+            relationIdList: { relation: [] },
+          },
+        } satisfies NotionRawEntity,
+        "relationIdList"
+      );
+      expect(result).toEqual([]);
+    });
+  });
+  describe("readRelationIdListOrFail", () => {
+    interface TestEntity extends SimplifiedNotionEntity {
+      relationIdList: string[];
+    }
+
+    const mockEntry: NotionRawEntity = {
+      properties: {
+        relationIdList: {
+          // @ts-ignore
+          relation: [{ id: "relation-id-1" }, { id: "relation-id-2" }],
+        },
+      },
+    };
+
+    it("should return the relation id list property if it exists", () => {
+      const result = readRelationIdListOrFail<TestEntity>(
+        mockEntry,
+        "relationIdList"
+      );
+      expect(result).toEqual(["relation-id-1", "relation-id-2"]);
+    });
+
+    it("should throw an error if the relation id list property does not exist", () => {
+      expect(() => {
+        readRelationIdListOrFail<TestEntity>(
+          { properties: {} } as NotionRawEntity,
+          "relationIdList"
+        );
+      }).toThrow('Property "relationIdList was undefined. abort.');
     });
   });
 });

@@ -34,6 +34,4 @@ export type NotionRawEntity =
   | PartialDatabaseObjectResponse
   | DatabaseObjectResponse;
 
-export type NotionRawEntityOrNull =
-  | NotionRawEntity
-  | null;
+export type NotionRawEntityOrNull = NotionRawEntity | null;

@@ -28,7 +28,6 @@
   "bugs": {
     "url": "https://github.com/oliverlorenz/lib-notion/issues"
   },
-  "private": true,
   "homepage": "https://github.com/oliverlorenz/lib-notion#readme",
   "devDependencies": {
     "@commitlint/cli": "^19.7.1",
@@ -54,5 +53,8 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.15"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

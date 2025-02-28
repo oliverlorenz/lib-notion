@@ -15,12 +15,13 @@ jobs:
           node-version: '22'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@oliverlorenz'
-      - run: npm ci
+      - run: npm install
       - name: Update package.json with release tag
         run: |
           TAG="${{ github.event.release.tag_name }}"
           echo "Updating package.json version to $TAG"
           npm version "$TAG" --no-git-tag-version
+      - run: npm run build
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/oliverlorenz/lib-notion#readme",
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.21.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.14.0",

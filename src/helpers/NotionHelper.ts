@@ -1,4 +1,4 @@
-import { NotionRawEntity, Relation, SimplifiedNotionEntity } from '../types';
+import type { NotionRawEntity, Relation, SimplifiedNotionEntity } from '../types';
 
 export function readProperty<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
@@ -106,6 +106,42 @@ export function readDateTimeStartOrFail<NotionType extends SimplifiedNotionEntit
   propertyName: keyof NotionType,
 ): Date {
   return orFail<NotionType, Date>(propertyName, readDateTimeStart(entry, propertyName));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Phone Number
+///////////////////////////////////////////////////////////////////////////////
+
+export function readPhoneNumber<NotionType extends SimplifiedNotionEntity>(
+  entry: NotionRawEntity,
+  propertyName: keyof NotionType,
+): number | undefined {
+  return readProperty<NotionType>(entry, propertyName)?.phone_number;
+}
+
+export function readPhoneNumberOrFail<NotionType extends SimplifiedNotionEntity>(
+  entry: NotionRawEntity,
+  propertyName: keyof NotionType,
+): number {
+  return orFail<NotionType, number>(propertyName, readPhoneNumber(entry, propertyName));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Phone Number
+///////////////////////////////////////////////////////////////////////////////
+
+export function readEMail<NotionType extends SimplifiedNotionEntity>(
+  entry: NotionRawEntity,
+  propertyName: keyof NotionType,
+): string | undefined {
+  return readProperty<NotionType>(entry, propertyName)?.email;
+}
+
+export function readEMailOrFail<NotionType extends SimplifiedNotionEntity>(
+  entry: NotionRawEntity,
+  propertyName: keyof NotionType,
+): string {
+  return orFail<NotionType, string>(propertyName, readEMail(entry, propertyName));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

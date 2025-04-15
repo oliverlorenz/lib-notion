@@ -2,7 +2,11 @@ import {
   readBoolean,
   readBooleanOrFail,
   readDateTimeStartOrFail,
+  readEMail,
+  readEMailOrFail,
   readNumberOrFail,
+  readPhoneNumber,
+  readPhoneNumberOrFail,
   readProperty,
   readRelationIdListOrFail,
   readSingleRelation,
@@ -10,7 +14,7 @@ import {
   readTitle,
   readTitleOrFail,
 } from './NotionHelper';
-import { NotionRawEntity, SimplifiedNotionEntity } from '../types';
+import type { NotionRawEntity, SimplifiedNotionEntity } from '../types';
 import { readRichText } from './NotionHelper';
 import { readRichTextOrFail } from './NotionHelper';
 import { readNumber } from './NotionHelper';
@@ -563,6 +567,154 @@ describe('NotionHelper', () => {
           'relationIdList',
         );
       }).toThrow('Property "relationIdList was undefined. abort.');
+    });
+  });
+
+  describe('readPhoneNumber', () => {
+    interface TestEntity extends SimplifiedNotionEntity {
+      phone: number;
+    }
+
+    const mockEntry: NotionRawEntity = {
+      properties: {
+        // @ts-ignore
+        phone: { phone_number: 1234567890 },
+      },
+    };
+
+    it('should read the phone property', () => {
+      const result = readPhoneNumber<TestEntity>(mockEntry, 'phone');
+      expect(result).toBe(1234567890);
+    });
+
+    it('should return undefined if phone property does not exist', () => {
+      const result = readPhoneNumber<TestEntity>({ properties: {} } as NotionRawEntity, 'phone');
+      expect(result).toBeUndefined();
+    });
+
+    it('should return undefined if phone value is not available', () => {
+      const result = readPhoneNumber<TestEntity>(
+        {
+          properties: {
+            // @ts-ignore
+            phone: {},
+          },
+        } satisfies NotionRawEntity,
+        'phone',
+      );
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('readPhoneNumberOrFail', () => {
+    interface TestEntity extends SimplifiedNotionEntity {
+      phone: number;
+    }
+
+    const mockEntry: NotionRawEntity = {
+      properties: {
+        // @ts-ignore
+        phone: { phone_number: 1234567890 },
+      },
+    };
+
+    it('should return the phone property if it exists', () => {
+      const result = readPhoneNumberOrFail<TestEntity>(mockEntry, 'phone');
+      expect(result).toBe(1234567890);
+    });
+
+    it('should throw an error if the phone property does not exist', () => {
+      expect(() => {
+        readPhoneNumberOrFail<TestEntity>({ properties: {} } as NotionRawEntity, 'phone');
+      }).toThrow('Property "phone was undefined. abort.');
+    });
+
+    it('should throw an error if the phone value is not available', () => {
+      expect(() => {
+        readPhoneNumberOrFail<TestEntity>(
+          {
+            properties: {
+              // @ts-ignore
+              phone: {},
+            },
+          } satisfies NotionRawEntity,
+          'phone',
+        );
+      }).toThrow('Property "phone was undefined. abort.');
+    });
+  });
+
+  describe('readEMail', () => {
+    interface TestEntity extends SimplifiedNotionEntity {
+      email: string;
+    }
+
+    const mockEntry: NotionRawEntity = {
+      properties: {
+        // @ts-ignore
+        email: { email: 'test@example.com' },
+      },
+    };
+
+    it('should read the email property', () => {
+      const result = readEMail<TestEntity>(mockEntry, 'email');
+      expect(result).toBe('test@example.com');
+    });
+
+    it('should return undefined if email property does not exist', () => {
+      const result = readEMail<TestEntity>({ properties: {} } as NotionRawEntity, 'email');
+      expect(result).toBeUndefined();
+    });
+
+    it('should return undefined if email value is not available', () => {
+      const result = readEMail<TestEntity>(
+        {
+          properties: {
+            // @ts-ignore
+            email: {},
+          },
+        } satisfies NotionRawEntity,
+        'email',
+      );
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('readEMailOrFail', () => {
+    interface TestEntity extends SimplifiedNotionEntity {
+      email: string;
+    }
+
+    const mockEntry: NotionRawEntity = {
+      properties: {
+        // @ts-ignore
+        email: { email: 'test@example.com' },
+      },
+    };
+
+    it('should return the email property if it exists', () => {
+      const result = readEMailOrFail<TestEntity>(mockEntry, 'email');
+      expect(result).toBe('test@example.com');
+    });
+
+    it('should throw an error if the email property does not exist', () => {
+      expect(() => {
+        readEMailOrFail<TestEntity>({ properties: {} } as NotionRawEntity, 'email');
+      }).toThrow('Property "email was undefined. abort.');
+    });
+
+    it('should throw an error if the email value is not available', () => {
+      expect(() => {
+        readEMailOrFail<TestEntity>(
+          {
+            properties: {
+              // @ts-ignore
+              email: {},
+            },
+          } satisfies NotionRawEntity,
+          'email',
+        );
+      }).toThrow('Property "email was undefined. abort.');
     });
   });
 });

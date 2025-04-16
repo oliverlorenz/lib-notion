@@ -69,7 +69,9 @@ export type CheckboxPropertyUpdate = {
 };
 
 export type DateTimeStartPropertyUpdate = {
-  start: string | null;
+  date: {
+    start: string | null;
+  };
   type: 'date';
 };
 

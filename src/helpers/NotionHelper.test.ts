@@ -897,7 +897,9 @@ describe('NotionHelper', () => {
       const value = new Date('2023-01-01T00:00:00Z');
       const result = writeDateTimeStart(value);
       expect(result).toEqual({
-        start: value.toISOString(),
+        date: {
+          start: value.toISOString(),
+        },
         type: 'date',
       });
     });
@@ -906,7 +908,9 @@ describe('NotionHelper', () => {
       const value = new Date('2023-01-01T12:00:00+02:00');
       const result = writeDateTimeStart(value);
       expect(result).toEqual({
-        start: value.toISOString(),
+        date: {
+          start: value.toISOString(),
+        },
         type: 'date',
       });
     });
@@ -915,7 +919,9 @@ describe('NotionHelper', () => {
       const value = new Date();
       const result = writeDateTimeStart(value);
       expect(result).toEqual({
-        start: value.toISOString(),
+        date: {
+          start: value.toISOString(),
+        },
         type: 'date',
       });
     });

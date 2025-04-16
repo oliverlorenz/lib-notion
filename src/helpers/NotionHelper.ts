@@ -163,7 +163,9 @@ export function readDateTimeStartOrFail<NotionType extends SimplifiedNotionEntit
 
 export function writeDateTimeStart(value: Date): DateTimeStartPropertyUpdate {
   return {
-    start: value.toISOString(),
+    date: {
+      start: value.toISOString(),
+    },
     type: 'date',
   };
 }

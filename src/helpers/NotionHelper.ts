@@ -1,4 +1,17 @@
-import type { NotionRawEntity, Relation, SimplifiedNotionEntity } from '../types';
+import type {
+  CheckboxPropertyUpdate,
+  DateTimeStartPropertyUpdate,
+  EMailPropertyUpdate,
+  NotionRawEntity,
+  NumberPropertyUpdate,
+  PhoneNumberPropertyUpdate,
+  Relation,
+  RelationIdListPropertyUpdate,
+  RichTextPropertyUpdate,
+  SimplifiedNotionEntity,
+  SingleRelationPropertyUpdate,
+  TitlePropertyUpdate,
+} from '../types';
 
 export function readProperty<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
@@ -36,6 +49,19 @@ export function readTitleOrFail<NotionType extends SimplifiedNotionEntity>(
   return orFail<NotionType, string>(propertyName, readTitle<NotionType>(entry, propertyName));
 }
 
+export function writeTitle(value: string): TitlePropertyUpdate {
+  return {
+    title: [
+      {
+        text: {
+          content: value,
+        },
+      },
+    ],
+    type: 'title',
+  };
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Rich Text
 ///////////////////////////////////////////////////////////////////////////////
@@ -52,6 +78,19 @@ export function readRichTextOrFail<NotionType extends SimplifiedNotionEntity>(
   propertyName: keyof NotionType,
 ): string {
   return orFail<NotionType, string>(propertyName, readRichText(entry, propertyName));
+}
+
+export function writeRichText(value: string): RichTextPropertyUpdate {
+  return {
+    rich_text: [
+      {
+        text: {
+          content: value,
+        },
+      },
+    ],
+    type: 'rich_text',
+  };
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -72,6 +111,13 @@ export function readNumberOrFail<NotionType extends SimplifiedNotionEntity>(
   return orFail<NotionType, number>(propertyName, readNumber(entry, propertyName));
 }
 
+export function writeNumber(value: number | null): NumberPropertyUpdate {
+  return {
+    number: value,
+    type: 'number',
+  };
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Boolean
 ///////////////////////////////////////////////////////////////////////////////
@@ -88,6 +134,13 @@ export function readBooleanOrFail<NotionType extends SimplifiedNotionEntity>(
   propertyName: keyof NotionType,
 ): boolean {
   return orFail<NotionType, boolean>(propertyName, readBoolean(entry, propertyName));
+}
+
+export function writeBoolean(value: boolean): CheckboxPropertyUpdate {
+  return {
+    checkbox: value,
+    type: 'checkbox',
+  };
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -108,6 +161,13 @@ export function readDateTimeStartOrFail<NotionType extends SimplifiedNotionEntit
   return orFail<NotionType, Date>(propertyName, readDateTimeStart(entry, propertyName));
 }
 
+export function writeDateTimeStart(value: Date): DateTimeStartPropertyUpdate {
+  return {
+    start: value.toISOString(),
+    type: 'date',
+  };
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Phone Number
 ///////////////////////////////////////////////////////////////////////////////
@@ -126,8 +186,15 @@ export function readPhoneNumberOrFail<NotionType extends SimplifiedNotionEntity>
   return orFail<NotionType, number>(propertyName, readPhoneNumber(entry, propertyName));
 }
 
+export function writePhoneNumber(value: string | null): PhoneNumberPropertyUpdate {
+  return {
+    phone_number: value,
+    type: 'phone_number',
+  };
+}
+
 ///////////////////////////////////////////////////////////////////////////////
-// Phone Number
+// Email
 ///////////////////////////////////////////////////////////////////////////////
 
 export function readEMail<NotionType extends SimplifiedNotionEntity>(
@@ -142,6 +209,13 @@ export function readEMailOrFail<NotionType extends SimplifiedNotionEntity>(
   propertyName: keyof NotionType,
 ): string {
   return orFail<NotionType, string>(propertyName, readEMail(entry, propertyName));
+}
+
+export function writeEMail(value: string | null): EMailPropertyUpdate {
+  return {
+    email: value,
+    type: 'email',
+  };
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -160,6 +234,17 @@ export function readSingleRelationOrFail<NotionType extends SimplifiedNotionEnti
   propertyName: keyof NotionType,
 ): Relation {
   return orFail(propertyName, readSingleRelation(entry, propertyName));
+}
+
+export function writeSingleRelation(value: string): SingleRelationPropertyUpdate {
+  return {
+    relation: [
+      {
+        id: value,
+      },
+    ],
+    type: 'relation',
+  };
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -184,4 +269,13 @@ export function readRelationIdListOrFail<NotionType extends SimplifiedNotionEnti
   propertyName: keyof NotionType,
 ): string[] {
   return orFail(propertyName, readRelationIdList(entry, propertyName));
+}
+
+export function writeRelationIdList(idList: string[]): RelationIdListPropertyUpdate {
+  return {
+    relation: idList.map((id) => {
+      return { id };
+    }),
+    type: 'relation',
+  };
 }

@@ -1,5 +1,5 @@
-import { Client } from '@notionhq/client';
-import {
+import type { Client } from '@notionhq/client';
+import type {
   DatabaseObjectResponse,
   PageObjectResponse,
   PartialDatabaseObjectResponse,
@@ -35,3 +35,77 @@ export type NotionRawEntity =
   | DatabaseObjectResponse;
 
 export type NotionRawEntityOrNull = NotionRawEntity | null;
+
+export type TitlePropertyUpdate = {
+  title: [
+    {
+      text: {
+        content: string;
+      };
+    },
+  ];
+  type: 'title';
+};
+
+export type RichTextPropertyUpdate = {
+  rich_text: [
+    {
+      text: {
+        content: string;
+      };
+    },
+  ];
+  type: 'rich_text';
+};
+
+export type NumberPropertyUpdate = {
+  number: number | null;
+  type: 'number';
+};
+
+export type CheckboxPropertyUpdate = {
+  checkbox: boolean;
+  type: 'checkbox';
+};
+
+export type DateTimeStartPropertyUpdate = {
+  start: string | null;
+  type: 'date';
+};
+
+export type PhoneNumberPropertyUpdate = {
+  phone_number: string | null;
+  type: 'phone_number';
+};
+
+export type EMailPropertyUpdate = {
+  email: string | null;
+  type: 'email';
+};
+
+export type SingleRelationPropertyUpdate = {
+  relation: [
+    {
+      id: string;
+    },
+  ];
+  type: 'relation';
+};
+
+export type RelationIdListPropertyUpdate = {
+  relation: {
+    id: string;
+  }[];
+  type: 'relation';
+};
+
+export type PropertyUpdate =
+  | TitlePropertyUpdate
+  | RichTextPropertyUpdate
+  | DateTimeStartPropertyUpdate
+  | CheckboxPropertyUpdate
+  | NumberPropertyUpdate
+  | PhoneNumberPropertyUpdate
+  | EMailPropertyUpdate
+  | SingleRelationPropertyUpdate
+  | RelationIdListPropertyUpdate;

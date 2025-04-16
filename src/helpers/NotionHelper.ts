@@ -177,15 +177,15 @@ export function writeDateTimeStart(value: Date): DateTimeStartPropertyUpdate {
 export function readPhoneNumber<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
   propertyName: keyof NotionType,
-): number | undefined {
+): string | undefined {
   return readProperty<NotionType>(entry, propertyName)?.phone_number;
 }
 
 export function readPhoneNumberOrFail<NotionType extends SimplifiedNotionEntity>(
   entry: NotionRawEntity,
   propertyName: keyof NotionType,
-): number {
-  return orFail<NotionType, number>(propertyName, readPhoneNumber(entry, propertyName));
+): string {
+  return orFail<NotionType, string>(propertyName, readPhoneNumber(entry, propertyName));
 }
 
 export function writePhoneNumber(value: string | null): PhoneNumberPropertyUpdate {

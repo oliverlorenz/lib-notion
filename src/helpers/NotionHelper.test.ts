@@ -587,13 +587,13 @@ describe('NotionHelper', () => {
     const mockEntry: NotionRawEntity = {
       properties: {
         // @ts-ignore
-        phone: { phone_number: 1234567890 },
+        phone: { phone_number: '1234567890' },
       },
     };
 
     it('should read the phone property', () => {
       const result = readPhoneNumber<TestEntity>(mockEntry, 'phone');
-      expect(result).toBe(1234567890);
+      expect(result).toBe('1234567890');
     });
 
     it('should return undefined if phone property does not exist', () => {
@@ -623,13 +623,13 @@ describe('NotionHelper', () => {
     const mockEntry: NotionRawEntity = {
       properties: {
         // @ts-ignore
-        phone: { phone_number: 1234567890 },
+        phone: { phone_number: '1234567890' },
       },
     };
 
     it('should return the phone property if it exists', () => {
       const result = readPhoneNumberOrFail<TestEntity>(mockEntry, 'phone');
-      expect(result).toBe(1234567890);
+      expect(result).toBe('1234567890');
     });
 
     it('should throw an error if the phone property does not exist', () => {

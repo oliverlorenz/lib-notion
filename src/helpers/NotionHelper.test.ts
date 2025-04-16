@@ -13,6 +13,15 @@ import {
   readSingleRelationOrFail,
   readTitle,
   readTitleOrFail,
+  writeBoolean,
+  writeDateTimeStart,
+  writeEMail,
+  writeNumber,
+  writePhoneNumber,
+  writeRelationIdList,
+  writeRichText,
+  writeSingleRelation,
+  writeTitle,
 } from './NotionHelper';
 import type { NotionRawEntity, SimplifiedNotionEntity } from '../types';
 import { readRichText } from './NotionHelper';
@@ -715,6 +724,313 @@ describe('NotionHelper', () => {
           'email',
         );
       }).toThrow('Property "email was undefined. abort.');
+    });
+  });
+
+  describe('writeTitle', () => {
+    it('should return a valid TitlePropertyUpdate object', () => {
+      const value = 'Test Title';
+      const result = writeTitle(value);
+      expect(result).toEqual({
+        title: [
+          {
+            text: {
+              content: value,
+            },
+          },
+        ],
+        type: 'title',
+      });
+    });
+
+    it('should handle an empty string as input', () => {
+      const value = '';
+      const result = writeTitle(value);
+      expect(result).toEqual({
+        title: [
+          {
+            text: {
+              content: value,
+            },
+          },
+        ],
+        type: 'title',
+      });
+    });
+  });
+
+  describe('writeRichText', () => {
+    it('should return a valid RichTextPropertyUpdate object', () => {
+      const value = 'Test Rich Text';
+      const result = writeRichText(value);
+      expect(result).toEqual({
+        rich_text: [
+          {
+            text: {
+              content: value,
+            },
+          },
+        ],
+        type: 'rich_text',
+      });
+    });
+
+    it('should handle an empty string as input', () => {
+      const value = '';
+      const result = writeRichText(value);
+      expect(result).toEqual({
+        rich_text: [
+          {
+            text: {
+              content: value,
+            },
+          },
+        ],
+        type: 'rich_text',
+      });
+    });
+  });
+
+  describe('writeNumber', () => {
+    it('should return a valid NumberPropertyUpdate object with a number value', () => {
+      const value = 42;
+      const result = writeNumber(value);
+      expect(result).toEqual({
+        number: value,
+        type: 'number',
+      });
+    });
+
+    it('should return a valid NumberPropertyUpdate object with a null value', () => {
+      const value = null;
+      const result = writeNumber(value);
+      expect(result).toEqual({
+        number: value,
+        type: 'number',
+      });
+    });
+
+    it('should handle zero as input', () => {
+      const value = 0;
+      const result = writeNumber(value);
+      expect(result).toEqual({
+        number: value,
+        type: 'number',
+      });
+    });
+
+    it('should handle negative numbers as input', () => {
+      const value = -42;
+      const result = writeNumber(value);
+      expect(result).toEqual({
+        number: value,
+        type: 'number',
+      });
+    });
+
+    it('should handle decimal numbers as input', () => {
+      const value = 3.14;
+      const result = writeNumber(value);
+      expect(result).toEqual({
+        number: value,
+        type: 'number',
+      });
+    });
+  });
+
+  describe('readBoolean', () => {
+    interface TestEntity extends SimplifiedNotionEntity {
+      boolean: boolean;
+    }
+
+    const mockEntry: NotionRawEntity = {
+      properties: {
+        // @ts-ignore
+        boolean: { checkbox: true },
+      },
+    };
+
+    it('should read the boolean property', () => {
+      const result = readBoolean<TestEntity>(mockEntry, 'boolean');
+      expect(result).toBe(true);
+    });
+
+    it('should return undefined if boolean property does not exist', () => {
+      const result = readBoolean<TestEntity>({ properties: {} } as NotionRawEntity, 'boolean');
+      expect(result).toBeUndefined();
+    });
+
+    it('should return undefined if boolean value is not available', () => {
+      const result = readBoolean<TestEntity>(
+        {
+          properties: {
+            // @ts-ignore
+            boolean: {},
+          },
+        } satisfies NotionRawEntity,
+        'boolean',
+      );
+      expect(result).toBeUndefined();
+    });
+  });
+  describe('writeBoolean', () => {
+    it('should return a valid CheckboxPropertyUpdate object with a true value', () => {
+      const value = true;
+      const result = writeBoolean(value);
+      expect(result).toEqual({
+        checkbox: value,
+        type: 'checkbox',
+      });
+    });
+
+    it('should return a valid CheckboxPropertyUpdate object with a false value', () => {
+      const value = false;
+      const result = writeBoolean(value);
+      expect(result).toEqual({
+        checkbox: value,
+        type: 'checkbox',
+      });
+    });
+  });
+  describe('writeDateTimeStart', () => {
+    it('should return a valid DateTimeStartPropertyUpdate object with a valid date', () => {
+      const value = new Date('2023-01-01T00:00:00Z');
+      const result = writeDateTimeStart(value);
+      expect(result).toEqual({
+        start: value.toISOString(),
+        type: 'date',
+      });
+    });
+
+    it('should handle a date with a different timezone', () => {
+      const value = new Date('2023-01-01T12:00:00+02:00');
+      const result = writeDateTimeStart(value);
+      expect(result).toEqual({
+        start: value.toISOString(),
+        type: 'date',
+      });
+    });
+
+    it('should handle the current date', () => {
+      const value = new Date();
+      const result = writeDateTimeStart(value);
+      expect(result).toEqual({
+        start: value.toISOString(),
+        type: 'date',
+      });
+    });
+  });
+  describe('writePhoneNumber', () => {
+    it('should return a valid PhoneNumberPropertyUpdate object with a string value', () => {
+      const value = '1234567890';
+      const result = writePhoneNumber(value);
+      expect(result).toEqual({
+        phone_number: value,
+        type: 'phone_number',
+      });
+    });
+
+    it('should return a valid PhoneNumberPropertyUpdate object with a null value', () => {
+      const value = null;
+      const result = writePhoneNumber(value);
+      expect(result).toEqual({
+        phone_number: value,
+        type: 'phone_number',
+      });
+    });
+
+    it('should handle an empty string as input', () => {
+      const value = '';
+      const result = writePhoneNumber(value);
+      expect(result).toEqual({
+        phone_number: value,
+        type: 'phone_number',
+      });
+    });
+  });
+  describe('writeEMail', () => {
+    it('should return a valid EMailPropertyUpdate object with a string value', () => {
+      const value = 'test@example.com';
+      const result = writeEMail(value);
+      expect(result).toEqual({
+        email: value,
+        type: 'email',
+      });
+    });
+
+    it('should return a valid EMailPropertyUpdate object with a null value', () => {
+      const value = null;
+      const result = writeEMail(value);
+      expect(result).toEqual({
+        email: value,
+        type: 'email',
+      });
+    });
+
+    it('should handle an empty string as input', () => {
+      const value = '';
+      const result = writeEMail(value);
+      expect(result).toEqual({
+        email: value,
+        type: 'email',
+      });
+    });
+  });
+
+  describe('writeSingleRelation', () => {
+    it('should return a valid SingleRelationPropertyUpdate object with a valid string value', () => {
+      const value = 'relation-id';
+      const result = writeSingleRelation(value);
+      expect(result).toEqual({
+        relation: [
+          {
+            id: value,
+          },
+        ],
+        type: 'relation',
+      });
+    });
+
+    it('should handle an empty string as input', () => {
+      const value = '';
+      const result = writeSingleRelation(value);
+      expect(result).toEqual({
+        relation: [
+          {
+            id: value,
+          },
+        ],
+        type: 'relation',
+      });
+    });
+  });
+
+  describe('writeRelationIdList', () => {
+    it('should return a valid RelationIdListPropertyUpdate object with a list of IDs', () => {
+      const idList = ['relation-id-1', 'relation-id-2'];
+      const result = writeRelationIdList(idList);
+      expect(result).toEqual({
+        relation: [{ id: 'relation-id-1' }, { id: 'relation-id-2' }],
+        type: 'relation',
+      });
+    });
+
+    it('should return an empty relation array when given an empty list', () => {
+      const idList: string[] = [];
+      const result = writeRelationIdList(idList);
+      expect(result).toEqual({
+        relation: [],
+        type: 'relation',
+      });
+    });
+
+    it('should handle a single ID in the list', () => {
+      const idList = ['relation-id-1'];
+      const result = writeRelationIdList(idList);
+      expect(result).toEqual({
+        relation: [{ id: 'relation-id-1' }],
+        type: 'relation',
+      });
     });
   });
 });

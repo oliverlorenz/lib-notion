@@ -1,7 +1,7 @@
 {
   "name": "@oliverlorenz/lib-notion",
   "version": "1.0.0",
-  "description": "",
+  "description": "lib-notion is a lightweight library that provides types and helper functions for creating, reading, and writing Notion API payloads. It simplifies the process of working with the Notion API by offering a structured and type-safe approach to payload management.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -26,7 +26,7 @@
   },
   "keywords": [],
   "author": "Oliver Lorenz",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/oliverlorenz/lib-notion/issues"
   },

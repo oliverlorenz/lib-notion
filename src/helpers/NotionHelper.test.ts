@@ -1,14 +1,19 @@
 import {
   readBoolean,
   readBooleanOrFail,
+  readDateTimeStart,
   readDateTimeStartOrFail,
   readEMail,
   readEMailOrFail,
+  readNumber,
   readNumberOrFail,
   readPhoneNumber,
   readPhoneNumberOrFail,
   readProperty,
+  readRelationIdList,
   readRelationIdListOrFail,
+  readRichText,
+  readRichTextOrFail,
   readSingleRelation,
   readSingleRelationOrFail,
   readTitle,
@@ -24,11 +29,6 @@ import {
   writeTitle,
 } from './NotionHelper';
 import type { NotionRawEntity, SimplifiedNotionEntity } from '../types';
-import { readRichText } from './NotionHelper';
-import { readRichTextOrFail } from './NotionHelper';
-import { readNumber } from './NotionHelper';
-import { readDateTimeStart } from './NotionHelper';
-import { readRelationIdList } from './NotionHelper';
 
 describe('NotionHelper', () => {
   describe('readProperty', () => {

@@ -1,0 +1,31 @@
+{
+  "name": "lib-notion",
+  "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node:22",
+  "postCreateCommand": "bash -i -c 'nvm install' && npm install",
+  "containerEnv": {
+    "DEVCONTAINER": "true",
+    "GIT_EDITOR": "code --wait"
+  },
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:${containerWorkspaceFolder}/node_modules/.bin"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "firsttris.vscode-jest-runner",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "ms-vsliveshare.vsliveshare",
+        "rtbenfield.vscode-jest-test-adapter",
+        "dbaeumer.vscode-eslint",
+        "visualstudioexptteam.vscodeintellicode"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "files.trimTrailingWhitespace": true
+      }
+    }
+  },
+  "remoteUser": "node"
+}

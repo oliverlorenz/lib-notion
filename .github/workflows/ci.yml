@@ -62,7 +62,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run test
+      - name: Run tests
         run: npm test
         
       - name: SonarQube Scan
